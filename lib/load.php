@@ -1,5 +1,8 @@
 <?php
-
+include_once 'includes/hash.class.php';
+include_once 'includes/Database.class.php';
+include_once 'includes/User.class.php';
+include_once 'includes/Session.class.php';
 function load_template($name){
     include __DIR__ ."/../templates/main/$name.php";
 }
@@ -27,48 +30,7 @@ function connection(): mysqli{
 }
 
 
-function signup($username,$password,$email,$phone){
 
-    $conn = connection();
-
-    $sql = "INSERT INTO user_data(username, password, email, number) VALUES ('$username' , '$password' , '$email' , '$phone');";
-    if($conn->query($sql) === TRUE){
-        header('Location: http://jemz.com/web/templates/main/signup_success.php');
-    }else{
-        echo "ERROT: ". $sql . "</br>". $conn->error;
-    }
-
-    // $sql = "INSERT INTO `user_data` (`username` , `password` , `email` , `number`) VALUES ('$username' , '$password' , '$email' , '$phone');";
-    
-    // $result = false;
-    // if($conn->query($sql)){
-    //     $result = true;
-    // }else{
-    //     $result = false;
-    // }  
-    // $conn->close();
-    // return $result;
-}
-
-function login(){
-
-    $conn = connection();
-    $email= 'test@gmail.com';
-    $password = 'testtest';
-    $sql = "SELECT * FROM user_data WHERE email = ? AND password = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss",$email,$password);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if($result->num_rows > 0){
-        echo "working";
-    }
-    else{
-        echo "Invalid";
-    }
-
-}
-login();
 ?>
 
 
