@@ -39,13 +39,13 @@ class SESSION{
         }
     }
 
-    public static function getUser()
-    {
-        return Session::$user;
-    }
+    // public static function getUser()
+    // {
+    //     return Session::$user;
+    // }
 
-    public static function getUserSession()
-    {
-        return Session::$usersession;
-    }
+    // public static function getUserSession()
+    // {
+    //     return Session::$usersession;
+    // }
 }

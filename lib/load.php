@@ -7,26 +7,18 @@ function load_template($name){
     include __DIR__ ."/../templates/main/$name.php";
 }
 
-function valid($user,$password){
-    if($user == 'jemz@gmail.com' and $password == 'jemz'){
-        return true;
+global $__site_config;
+$__site_config = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/../dbconfig.json');
+SESSION::start();
+function get_config($key,$default=null){
+    global $__site_config;
+    $array = json_decode($__site_config,true);
+    if(isset($array[$key])){
+        return $array[$key];
     }
     else{
-        return false;
+        return $default;
     }
-}
-function connection(): mysqli{
-    $servername = "localhost:3306";
-    $usrname = "phpmyadmin";
-    $passwd = "kali";
-    $dbname = "phpmyadmin";
-
-    $conn = new mysqli($servername,$usrname,$passwd,$dbname);
-    if($conn->connect_error){
-        die("connection Failed:" . $conn->connect_error);
-    }
-    return $conn;
-
 }
 
 
