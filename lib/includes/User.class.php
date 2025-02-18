@@ -1,7 +1,10 @@
 <?php 
 class USER{
     public $usernamee;
-
+    private $conn;
+    public $bio;
+    public $email;
+    public $id=null;
 
     public static function register($username,$password,$email,$phone){
         $conn = DataBase::connection();
@@ -37,15 +40,57 @@ class USER{
         }
     }
 
-        // public function __construct($username){
-        //     $this->id = null;
-        //     $this->id = 'user_data';
-        //     $sql = "SELECT `id` FROM `auth` WHERE `username`= '$username' OR `id` = '$username' OR `email` = '$username' LIMIT 1;";
-        // }
+    public static function getUsername($email){
+        $conn = DataBase::connection();
+        $query = "SELECT * FROM user_data WHERE email='$email';";
+        $result = $conn->query($query);
+        if($result->num_rows == 1){
+            $row = $result->fetch_assoc();
+            return $row['username'];
+        }
+    }
 
-    // public static function setBio(){
-    //     return $this->bio;
-    // }
+        public function __construct($email){
+            $this->conn = DataBase::connection();
+            $this->id = 'user_data';
+            $sql = "SELECT id FROM `user_data` WHERE `email`= '$email';";
+            $result = $this->conn->query($sql);
+            if ($result->num_rows) {
+                $row = $result->fetch_assoc();
+                $this->id = $row['id']; //Updating this from database
+            } else {
+                throw new Exception("Username does't exist");
+            }
+        }
+        public function _get_data($var){
+            if(!$this->conn){
+                $this->conn = DataBase::connection();
+            }
+            $sql= "SELECT $var FROM user_posts WHERE id=$this->id;";
+            $result = $this->conn->query($sql);
+            if ($result->num_rows) {
+                $row = $result->fetch_assoc();
+                print($row['bio']); 
+            }else{
+                print("Not working");
+            }
+        }
+        private function _set_data($var,$data){
+            if(!$this->conn){
+                $this->conn = DataBase::connection();
+            }
+            $sql= "SELECT '$var' SET user_posts  WHERE 'id'=$this->id;";
+            if($this->conn->query($sql)){
+                return true;
+            }else{{
+                return false;
+            }}
+        }
+
+
+    public  function setBio(){
+        return $this->bio;
+    }
 
     public static function getBio(){
         $sql = "SELECT * FROM ";
