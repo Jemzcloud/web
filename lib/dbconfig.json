@@ -1,8 +1,0 @@
-{ 
-        "db_server":"localhost:3306",
-        "username":"phpmyadmin",
-        "password":"kali",
-        "dbname":"phpmyadmin"
-
-
-}
