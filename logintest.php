@@ -11,8 +11,9 @@ if(isset($_GET['logout'])){
 if (Session::get('is_loggedin')) {
     $username = Session::get('session_username');
     echo 'Welcome Back ', USER::getUsername($email);
-    $bio = new USER($email);
-    echo $bio->_get_data("bio");
+    $data = new USER($email);
+    $data->setBio("The bio is firw so get thw water!");
+    echo "\nbio:",$data->getBio();
 } else {
     printf('No session found, trying to login now.');
     $result = USER::Login($email,$password);

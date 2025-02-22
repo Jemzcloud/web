@@ -40,6 +40,20 @@ class USER{
         }
     }
 
+        public function __call($name, $args){
+        $proprety = preg_replace("/[^0-9a-zA-Z]/","",substr($name, 3));
+        $proprety = strtolower(preg_replace('/\B([A-Z])/','_$1',$proprety));
+        if(substr($name,0,3)=="get"){
+            return $this->_get_data($proprety);
+        }
+        elseif(substr($name,0,3)=="set"){
+            return $this->_set_data($proprety,$args[0]);
+        }
+        else{
+            
+        }
+    }
+
     public static function getUsername($email){
         $conn = DataBase::connection();
         $query = "SELECT * FROM user_data WHERE email='$email';";
@@ -79,7 +93,8 @@ class USER{
             if(!$this->conn){
                 $this->conn = DataBase::connection();
             }
-            $sql= "SELECT '$var' SET user_posts  WHERE 'id'=$this->id;";
+            $sql= "UPDATE user_posts SET bio='$data' WHERE id=$this->id;"; 
+
             if($this->conn->query($sql)){
                 return true;
             }else{{
@@ -87,14 +102,6 @@ class USER{
             }}
         }
 
-
-    public  function setBio(){
-        return $this->bio;
-    }
-
-    public static function getBio(){
-        $sql = "SELECT * FROM ";
-    }
 
     
 
