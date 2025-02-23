@@ -3,6 +3,7 @@ include_once 'includes/hash.class.php';
 include_once 'includes/Database.class.php';
 include_once 'includes/User.class.php';
 include_once 'includes/Session.class.php';
+include_once 'includes/UserSession.class.php';
 function load_template($name){
     include __DIR__ ."/../templates/main/$name.php";
 }
